@@ -15,15 +15,18 @@ Apache(Database)
 Linux
 
 ### Rewards
-**한국통신학회 우수상**
+**한국통신학회 우수상**:trophy:
 
-**한국산업기술대학교 산학협력단 장려상**
+**한국산업기술대학교 산학협력단 장려상**:trophy:
 
 종합설계기획 A+
 
 종합설계1 A+
 
 종합설계2 A
+
+### :trophy:논문 링크
+https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE10501304
 
 ## 내가 맡은 부분
 1. 딥러닝
