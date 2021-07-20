@@ -1,0 +1,21 @@
+﻿  Receive.cpp
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(47): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(62): warning C4473: 'printf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+  c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(62): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+  c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(62): note: 누락된 variadic 인수 1이(가) 서식 문자열 '%d'에 필요합니다.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(71): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(1868): note: 'inet_ntoa' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(72): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(82): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(87): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(92): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(97): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
+c:\users\김태훈\documents\visual studio 2015\projects\tcpip\server\server\receive.cpp(110): warning C4715: 'ProcessClient': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  Server.vcxproj -> C:\Users\김태훈\Documents\Visual Studio 2015\Projects\TCPIP\Server\Debug\Server.exe
+  Server.vcxproj -> C:\Users\김태훈\Documents\Visual Studio 2015\Projects\TCPIP\Server\Debug\Server.pdb (Full PDB)
