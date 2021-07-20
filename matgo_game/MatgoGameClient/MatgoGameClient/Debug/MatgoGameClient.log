@@ -1,0 +1,4 @@
+﻿  MatgoGameClientDlg.cpp
+c:\users\김태훈\documents\visual studio 2015\projects\visual\matgogameclient\matgogameclient\matgogameclientdlg.cpp(336): warning C4101: 'hbit' :참조되지 않은 지역 변수입니다.
+  MatgoGameClient.vcxproj -> C:\Users\김태훈\Documents\Visual Studio 2015\Projects\visual\MatgoGameClient\x64\Debug\MatgoGameClient.exe
+  MatgoGameClient.vcxproj -> C:\Users\김태훈\Documents\Visual Studio 2015\Projects\visual\MatgoGameClient\x64\Debug\MatgoGameClient.pdb (Partial PDB)
