@@ -5,10 +5,10 @@ int *BITmap;
 int *Picture;
 int *Openpicture;
 
-Player player;											//ÇÃ·¹ÀÌ¾î ÆĞ ±¸Á¶Ã¼
-HBITMAP hbit;											//ÀÚ½ÅÀÇ ÆĞ 10Àå ºñÆ®¸Ê ÇÚµé
-HBITMAP openhbit;										//¹Ù´Ú¿¡ ³õÀÏ ÆĞ 8Àå ºñÆ®¸Ê ÇÚµé
-extern CMatgoGameClientDlg *pMainDlg;					//¸ŞÀÎ ´ÙÀÌ¾ó·Î±× ÄÁÆ®·Ñ
+Player player;											//í”Œë ˆì´ì–´ íŒ¨ êµ¬ì¡°ì²´
+HBITMAP hbit;											//ìì‹ ì˜ íŒ¨ 10ì¥ ë¹„íŠ¸ë§µ í•¸ë“¤
+HBITMAP openhbit;										//ë°”ë‹¥ì— ë†“ì¼ íŒ¨ 8ì¥ ë¹„íŠ¸ë§µ í•¸ë“¤
+extern CMatgoGameClientDlg *pMainDlg;					//ë©”ì¸ ë‹¤ì´ì–¼ë¡œê·¸ ì»¨íŠ¸ë¡¤
 extern SOCKET sock;
 GameFunction::GameFunction(int bit[],int pic[],int opic[])
 {
@@ -16,7 +16,6 @@ GameFunction::GameFunction(int bit[],int pic[],int opic[])
 	Picture =pic;
 	Openpicture = opic;
 }
-
 
 GameFunction::~GameFunction()
 {
@@ -29,8 +28,8 @@ void GameFunction::init_pae(char msg[])
 	char *split;
 	split = strtok(msg, ",");
 	for (int i = 0; i < 10; i++) {
-		player.Pae_Add(atoi(split));			//ÀÚ½ÅÀÇ ÆĞ 10Àå Ãß°¡
-		hbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[atoi(split)]));		//ÇÈÃÄÄÁÆ®·Ñ¸¦ ÀÌ¿ëÇØ ºñÆ®¸Ê ÀÌ¹ÌÁö Ãâ·Â(ÀÚ½ÅÀÇ ÆĞ)
+		player.Pae_Add(atoi(split));			//ìì‹ ì˜ íŒ¨ 10ì¥ ì¶”ê°€
+		hbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[atoi(split)]));		//í”½ì³ì»¨íŠ¸ë¡¤ë¥¼ ì´ìš©í•´ ë¹„íŠ¸ë§µ ì´ë¯¸ì§€ ì¶œë ¥(ìì‹ ì˜ íŒ¨)
 		CStatic *pic= (CStatic *)pMainDlg->GetDlgItem(Picture[i]);
 		pic->SetBitmap(hbit);
 		split = strtok(NULL, ",");
@@ -45,14 +44,14 @@ void GameFunction::init_openpae(char msg[])
 	split = strtok(msg, ",");
 	for (int i = 0; i < 8; i++) {
 		player.OpenPae_Add(atoi(split));
-		openhbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[atoi(split)]));		//ÇÈÃÄÄÁÆ®·Ñ¸¦ ÀÌ¿ëÇØ ºñÆ®¸Ê ÀÌ¹ÌÁö Ãâ·Â(¹Ù´Ú¿¡ ³õÀÎÆĞ)
+		openhbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[atoi(split)]));		//í”½ì³ì»¨íŠ¸ë¡¤ë¥¼ ì´ìš©í•´ ë¹„íŠ¸ë§µ ì´ë¯¸ì§€ ì¶œë ¥(ë°”ë‹¥ì— ë†“ì¸íŒ¨)
 		CStatic *openpic= (CStatic *)pMainDlg->GetDlgItem(Openpicture[i]);
 		openpic->SetBitmap(openhbit);
 		split = strtok(NULL, ",");
 	}
 }
 
-void GameFunction::Add_Bonus(char msg[])					//º¸³Ê½º ¹Ş¾ÒÀ»¶§
+void GameFunction::Add_Bonus(char msg[])					//ë³´ë„ˆìŠ¤ ë°›ì•˜ì„ë•Œ
 {
 	char *split;
 	split = strtok(msg, ",");
@@ -60,12 +59,12 @@ void GameFunction::Add_Bonus(char msg[])					//º¸³Ê½º ¹Ş¾ÒÀ»¶§
 		ScoreAdd(atoi(split));
 		split = strtok(NULL, ",");
 	}
-	if (player.OpPeascore_len() > 0)			//»ó´ë¹æ ÇÇ°¡ Á¸Àç ÇÒ¶§ ÇÇ¸¦ ÇÑÀå °¡Áö°í ¿Â´Ù
+	if (player.OpPeascore_len() > 0)			//ìƒëŒ€ë°© í”¼ê°€ ì¡´ì¬ í• ë•Œ í”¼ë¥¼ í•œì¥ ê°€ì§€ê³  ì˜¨ë‹¤
 	{
 		int pnum=player.OpPeascore_value(player.OpPeascore_len() - 1);
 		player.OpPaescore_Del();
 		player.oppeacount -= 1;
-		if (pnum == 32 || pnum == 41 || pnum == 47 || pnum == 48 || pnum == 49)		//½ÖÇÇÀÏ¶§
+		if (pnum == 32 || pnum == 41 || pnum == 47 || pnum == 48 || pnum == 49)		//ìŒí”¼ì¼ë•Œ
 		{
 			player.opssangpea -= 1;
 		}
@@ -74,7 +73,7 @@ void GameFunction::Add_Bonus(char msg[])					//º¸³Ê½º ¹Ş¾ÒÀ»¶§
 	pMainDlg->Invalidate();
 }
 
-void GameFunction::Op_Bonus(char msg[])					//»ó´ë¹æÀÌ º¸³Ê½º¸¦ ¾ò¾úÀ»¶§ °¡Áö°í ÀÖ´ÂÆĞ¸¦ ³Ñ±è
+void GameFunction::Op_Bonus(char msg[])					//ìƒëŒ€ë°©ì´ ë³´ë„ˆìŠ¤ë¥¼ ì–»ì—ˆì„ë•Œ ê°€ì§€ê³  ìˆëŠ”íŒ¨ë¥¼ ë„˜ê¹€
 {
 	char *split;
 	split = strtok(msg, ",");
@@ -84,10 +83,10 @@ void GameFunction::Op_Bonus(char msg[])					//»ó´ë¹æÀÌ º¸³Ê½º¸¦ ¾ò¾úÀ»¶§ °¡Áö°í 
 	}
 	if (player.Peascore_len() > 0)
 	{
-		int pnum = player.Peascore_value(player.Peascore_len() - 1);		//»ó´ë¹æ Á¡¼öÆĞÁß ÇÇ¸¦ 1Àå °¡Á®¿À¸ç »ó´ë Á¡¼öÆĞ¿¡ ÇÇ 1Àå »èÁ¦
+		int pnum = player.Peascore_value(player.Peascore_len() - 1);		//ìƒëŒ€ë°© ì ìˆ˜íŒ¨ì¤‘ í”¼ë¥¼ 1ì¥ ê°€ì ¸ì˜¤ë©° ìƒëŒ€ ì ìˆ˜íŒ¨ì— í”¼ 1ì¥ ì‚­ì œ
 		player.Paescore_Del();
 		player.peacount -= 1;
-		if (pnum == 32 || pnum == 41 || pnum == 47 || pnum == 48 || pnum == 49)		//½ÖÇÇÀÏ¶§
+		if (pnum == 32 || pnum == 41 || pnum == 47 || pnum == 48 || pnum == 49)		//ìŒí”¼ì¼ë•Œ
 		{
 			player.ssangpea -= 1;
 		}
@@ -106,36 +105,36 @@ void GameFunction::Open_Updatae(char msg[])
 	int num2;
 	char message[20];
 	int check = player.OpenFind_adr(num);
-	if (check != -1)											//12: Ãß°¡ µæÁ¡ ÀÖÀ»¶§
+	if (check != -1)											//12: ì¶”ê°€ ë“ì  ìˆì„ë•Œ
 	{
-		//Ãß°¡ µæÁ¡
+		//ì¶”ê°€ ë“ì 
 		num2 = player.OpenFind_value(check);
 		sprintf(message, "%s,%d,%d", "ADD", num, num2);
 		Sleep(10);
-		retval = send(sock, message, strlen(message), 0);		//15 ADD,»õ·Î¿î ¹Ù´ÚÆĞ1Àå,±âÁ¸ÀÇ ¹Ù´ÚÆĞ1Àå
-		player.OpenErase(check);								//14:±âÁ¸ÀÇ ¹Ù´ÚÆĞ 1Àå »èÁ¦
-		ScoreAdd(num);								//13:±âÁ¸ÀÇ ¹Ù´ÚÆĞ 1Àå, »õ·Î¿î ¹Ù´ÚÆĞ 1Àå Á¡¼öÆĞ·Î Ãß°¡
+		retval = send(sock, message, strlen(message), 0);		//15 ADD,ìƒˆë¡œìš´ ë°”ë‹¥íŒ¨1ì¥,ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨1ì¥
+		player.OpenErase(check);								//14:ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨ 1ì¥ ì‚­ì œ
+		ScoreAdd(num);								//13:ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨ 1ì¥, ìƒˆë¡œìš´ ë°”ë‹¥íŒ¨ 1ì¥ ì ìˆ˜íŒ¨ë¡œ ì¶”ê°€
 		ScoreAdd(num2);
 	}
-	else {													// Ãß°¡ µæÁ¡ ¾øÀ»¶§
-		player.OpenPae_Add(atoi(msg));						//12-1: »õ·Î¿î ¹Ù´ÚÆĞ 1ÀåÀ» ¹ŞÀº°É·Î ¹Ù´ÚÆĞ¿¡ Ãß°¡
+	else {													// ì¶”ê°€ ë“ì  ì—†ì„ë•Œ
+		player.OpenPae_Add(atoi(msg));						//12-1: ìƒˆë¡œìš´ ë°”ë‹¥íŒ¨ 1ì¥ì„ ë°›ì€ê±¸ë¡œ ë°”ë‹¥íŒ¨ì— ì¶”ê°€
 	}	
 	OpenPaeUpdate();
 	pMainDlg->Invalidate();
 }
 
-void GameFunction::SelectPae(int mine, int open)//ÇÃ·¹ÀÌ¾î°¡ ¼±ÅÃÇÑ ÆĞ¸¦ ¹Ù´Ú¿¡ ±ò¸° ÆĞ »èÁ¦ ÇÔ²² Á¡¼ö ÆĞ Ãß°¡ 
+void GameFunction::SelectPae(int mine, int open)//í”Œë ˆì´ì–´ê°€ ì„ íƒí•œ íŒ¨ë¥¼ ë°”ë‹¥ì— ê¹”ë¦° íŒ¨ ì‚­ì œ í•¨ê»˜ ì ìˆ˜ íŒ¨ ì¶”ê°€ 
 {
 	int a = mine;
 	int b = open;
 		int retval;
 	    char msg[20];
-		ScoreAdd(mine);				//4:ÀÚ½ÅÀÇ ÆĞ¸¦ Á¡¼öÆĞ·Î Ãß°¡
-		ScoreAdd(open);				//4:±âÁ¸ÀÇ ¹Ù´ÚÆĞ¸¦ Á¡¼öÆĞ·Î Ãß°¡
+		ScoreAdd(mine);				//4:ìì‹ ì˜ íŒ¨ë¥¼ ì ìˆ˜íŒ¨ë¡œ ì¶”ê°€
+		ScoreAdd(open);				//4:ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨ë¥¼ ì ìˆ˜íŒ¨ë¡œ ì¶”ê°€
 		int pos = player.PaeFind_adr(mine);
-		//player.PaeErase(pos);					//3 : ÀÚ½ÅÀÇ ÆĞ 1Àå»èÁ¦
+		//player.PaeErase(pos);					//3 : ìì‹ ì˜ íŒ¨ 1ì¥ì‚­ì œ
 		pos = player.OpenFind_adr(open);
-		player.OpenErase(pos);				//3: ±âÁ¸ÀÇ ¹Ù´ÚÆĞ 1Àå »èÁ¦	
+		player.OpenErase(pos);				//3: ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨ 1ì¥ ì‚­ì œ	
 		sprintf(msg, "%s,%d,%d", "SELECT", mine, open);
 		retval = send(sock, msg, strlen(msg), 0);
 		pMainDlg->Invalidate();
@@ -149,10 +148,10 @@ void GameFunction::OP_SCore(char msg[])
 	for (int i = 0; i < 2; i++)
 	{
 		data[i] = atoi(split);
-		OpScoreAdd(data[i]);							//9-1:±âÁ¸ÀÇ ¹Ù´ÚÆĞ, »ó´ë¹æ ¼ÒÀ¯ÆĞ 1Àå¾¿ »ó´ë¹æ Á¡¼öÆĞ¿¡ Ãß°¡
+		OpScoreAdd(data[i]);							//9-1:ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨, ìƒëŒ€ë°© ì†Œìœ íŒ¨ 1ì¥ì”© ìƒëŒ€ë°© ì ìˆ˜íŒ¨ì— ì¶”ê°€
 		split = strtok(NULL, ",");
 	}
-	player.OpenErase(player.OpenFind_adr(data[1]));		//9-2 ±âÁ¸ÀÇ ¹Ù´ÚÆĞ¸¦ ¹Ù´ÚÆĞ¿¡¼­ »èÁ¦
+	player.OpenErase(player.OpenFind_adr(data[1]));		//9-2 ê¸°ì¡´ì˜ ë°”ë‹¥íŒ¨ë¥¼ ë°”ë‹¥íŒ¨ì—ì„œ ì‚­ì œ
 	pMainDlg->Invalidate();
 }
 
@@ -169,14 +168,14 @@ void GameFunction::NOP_open(char msg[])
 	split = strtok(msg, ",");
 	for (int i = 0; i < 2; i++)
 	{
-		player.OpenPae_Add(atoi(split));				//2-7 »õ·Î¿î ¹Ù´ÚÆĞ, »ó´ë¹æ ¼ÒÀ¯ÆĞ¸¦ ¹Ù´ÚÆĞ¿¡ Ãß°¡
+		player.OpenPae_Add(atoi(split));				//2-7 ìƒˆë¡œìš´ ë°”ë‹¥íŒ¨, ìƒëŒ€ë°© ì†Œìœ íŒ¨ë¥¼ ë°”ë‹¥íŒ¨ì— ì¶”ê°€
 		split = strtok(NULL, ",");
 	}
 	OpenPaeUpdate();
 	pMainDlg->Invalidate();
 }
 
-void GameFunction::OP_add(char msg[])					//»ó´ë¹æÀÌ Ãß°¡ µæÁ¡ ÇÒ¶§
+void GameFunction::OP_add(char msg[])					//ìƒëŒ€ë°©ì´ ì¶”ê°€ ë“ì  í• ë•Œ
 {
 	char *split;
 	split = strtok(msg, ",");
@@ -196,15 +195,15 @@ void GameFunction::NSelectPae(int mine)
 {
 	int retval;
 	char msg[50];
-	player.OpenPae_Add(mine);				//2-1 ÀÚ½ÅÀÇ ÆĞ1ÀåÀ» openÆĞ Ãß°¡
-	//player.PaeErase(player.PaeFind_value(mine));//2-1 ÀÚ½ÅÀÇÆĞ 1ÀåÀ» »èÁ¦
+	player.OpenPae_Add(mine);				//2-1 ìì‹ ì˜ íŒ¨1ì¥ì„ openíŒ¨ ì¶”ê°€
+	//player.PaeErase(player.PaeFind_value(mine));//2-1 ìì‹ ì˜íŒ¨ 1ì¥ì„ ì‚­ì œ
 	sprintf(msg, "%s,%d", "NSELECT", mine);
 	Sleep(10);
-	retval = send(sock, msg, strlen(msg), 0);//2-2 NSELECT,ÀÚ½ÅÀÇÆĞ 1Àå
+	retval = send(sock, msg, strlen(msg), 0);//2-2 NSELECT,ìì‹ ì˜íŒ¨ 1ì¥
 	pMainDlg->Invalidate();
 }
 
-void GameFunction::SelectBonus(int bonus)				//¼±ÅÃÇÑ ÆĞ°¡ º¸³Ê½ºÆĞÀÏ¶§, ¼­¹ö·Î Àü¼Û
+void GameFunction::SelectBonus(int bonus)				//ì„ íƒí•œ íŒ¨ê°€ ë³´ë„ˆìŠ¤íŒ¨ì¼ë•Œ, ì„œë²„ë¡œ ì „ì†¡
 {
 	char msg[20];
 	sprintf(msg, "%s,%d", "SELBONUS", bonus);
@@ -212,7 +211,7 @@ void GameFunction::SelectBonus(int bonus)				//¼±ÅÃÇÑ ÆĞ°¡ º¸³Ê½ºÆĞÀÏ¶§, ¼­¹ö·Î 
 	pMainDlg->Invalidate();
 }
 
-void GameFunction::NewPae(char msg[])				//¼±ÅÃÇÑ ÆĞ°¡ º¸³Ê½ºÆĞÀÏ¶§ ¼­¹ö·ÎºÎÅÍ ¹­À½ÆĞ¸¦ 1ÀåÀ» ¹Ş¾Æ ÀÚ½ÅÀÇ ÆĞ·Î Ãß°¡
+void GameFunction::NewPae(char msg[])				//ì„ íƒí•œ íŒ¨ê°€ ë³´ë„ˆìŠ¤íŒ¨ì¼ë•Œ ì„œë²„ë¡œë¶€í„° ë¬¶ìŒíŒ¨ë¥¼ 1ì¥ì„ ë°›ì•„ ìì‹ ì˜ íŒ¨ë¡œ ì¶”ê°€
 {
 	char *split;
 	int data[2];
@@ -225,15 +224,15 @@ void GameFunction::NewPae(char msg[])				//¼±ÅÃÇÑ ÆĞ°¡ º¸³Ê½ºÆĞÀÏ¶§ ¼­¹ö·ÎºÎÅÍ ¹
 	int pos = player.PaeFind_adr(data[1]);
 	player.PaeReplace(data[0], pos);
 	ScoreAdd(data[1]);
-	hbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[data[0]]));		//ÇÈÃÄÄÁÆ®·Ñ¸¦ ÀÌ¿ëÇØ ºñÆ®¸Ê ÀÌ¹ÌÁö Ãâ·Â(ÀÚ½ÅÀÇ ÆĞ)
+	hbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[data[0]]));		//í”½ì³ì»¨íŠ¸ë¡¤ë¥¼ ì´ìš©í•´ ë¹„íŠ¸ë§µ ì´ë¯¸ì§€ ì¶œë ¥(ìì‹ ì˜ íŒ¨)
 	CStatic *pic = (CStatic *)pMainDlg->GetDlgItem(Picture[pos]);
 	pic->SetBitmap(hbit);
-	if (player.OpPeascore_len() > 0)			//»ó´ë¹æ ÇÇ°¡ Á¸Àç ÇÒ¶§ ÇÇ¸¦ ÇÑÀå °¡Áö°í ¿Â´Ù
+	if (player.OpPeascore_len() > 0)			//ìƒëŒ€ë°© í”¼ê°€ ì¡´ì¬ í• ë•Œ í”¼ë¥¼ í•œì¥ ê°€ì§€ê³  ì˜¨ë‹¤
 	{
 		int pnum = player.OpPeascore_value(player.OpPeascore_len() - 1);
 		player.OpPaescore_Del();
 		player.oppeacount -= 1;
-		if (pnum == 32 || pnum == 41 || pnum == 47 || pnum == 48 || pnum == 49)		//½ÖÇÇÀÏ¶§
+		if (pnum == 32 || pnum == 41 || pnum == 47 || pnum == 48 || pnum == 49)		//ìŒí”¼ì¼ë•Œ
 		{
 			player.opssangpea -= 1;
 		}
@@ -261,9 +260,9 @@ void GameFunction::Gobak()
 
 
 
-void GameFunction::ScoreAdd(int pae)					//µæÁ¡½Ã ÀÚ½ÅÀÇ Á¡¼öÆĞ Ãß°¡
+void GameFunction::ScoreAdd(int pae)					//ë“ì ì‹œ ìì‹ ì˜ ì ìˆ˜íŒ¨ ì¶”ê°€
 {
-	if (pae == 0 || pae == 8 || pae == 28 || pae == 40 || pae == 44)			//±¤ÀÏ¶§
+	if (pae == 0 || pae == 8 || pae == 28 || pae == 40 || pae == 44)			//ê´‘ì¼ë•Œ
 	{
 		player.Gwang_Add(pae);
 		player.gwangcount++;
@@ -271,22 +270,22 @@ void GameFunction::ScoreAdd(int pae)					//µæÁ¡½Ã ÀÚ½ÅÀÇ Á¡¼öÆĞ Ãß°¡
 			player.bigwang = true;
 	}
 	
-	else if (pae == 1 || pae == 5 || pae == 9 || pae == 13 || pae == 17 || pae == 21 || pae == 25 || pae == 33 || pae == 37 || pae == 45)		//´ÜÀÏ¶§
+	else if (pae == 1 || pae == 5 || pae == 9 || pae == 13 || pae == 17 || pae == 21 || pae == 25 || pae == 33 || pae == 37 || pae == 45)		//ë‹¨ì¼ë•Œ
 	{
 		player.Dan_Add(pae);
 		player.dancount++;
-		if (pae == 1 || pae == 5 || pae == 9) {		//È«´ÜÆĞ ÀÏ¶§
+		if (pae == 1 || pae == 5 || pae == 9) {		//í™ë‹¨íŒ¨ ì¼ë•Œ
 			player.hongdancount++;
 			if (player.hongdancount == 3)
 				player.hongdan = true;
 		}
-		else if (pae == 13 || pae == 17 || pae == 25)			//ÃÊ´ÜÆĞ ÀÏ¶§
+		else if (pae == 13 || pae == 17 || pae == 25)			//ì´ˆë‹¨íŒ¨ ì¼ë•Œ
 		{
 			player.chodancount++;
 			if (player.chodancount == 3)
 				player.chodan = true;
 		}
-		else if (pae == 21 || pae == 33 || pae == 37)			//Ã»´ÜÆĞ ÀÏ¶§
+		else if (pae == 21 || pae == 33 || pae == 37)			//ì²­ë‹¨íŒ¨ ì¼ë•Œ
 		{
 			player.chungdancount++;
 			if (player.chungdancount == 3)
@@ -294,11 +293,11 @@ void GameFunction::ScoreAdd(int pae)					//µæÁ¡½Ã ÀÚ½ÅÀÇ Á¡¼öÆĞ Ãß°¡
 		}
 	}
 	
-	else if (pae == 4 || pae == 12 || pae == 16 || pae == 20 || pae == 24 || pae == 29 || pae == 36 || pae == 46)	//¸Û(¿­²ı)ÆĞ ÀÏ¶§
+	else if (pae == 4 || pae == 12 || pae == 16 || pae == 20 || pae == 24 || pae == 29 || pae == 36 || pae == 46)	//ë©(ì—´ë—)íŒ¨ ì¼ë•Œ
 	{
 		player.Mung_Add(pae);
 		player.mungcount++;
-		if (pae == 4 || pae == 12 || pae == 29)		//°íµµ¸® ÆĞ ÀÏ¶§
+		if (pae == 4 || pae == 12 || pae == 29)		//ê³ ë„ë¦¬ íŒ¨ ì¼ë•Œ
 		{
 			player.godoricount++;
 			if (player.godoricount == 3)
@@ -307,15 +306,15 @@ void GameFunction::ScoreAdd(int pae)					//µæÁ¡½Ã ÀÚ½ÅÀÇ Á¡¼öÆĞ Ãß°¡
 	}
 	
 	else
-	{														//ÇÇ ÀÏ´ë
+	{														//í”¼ ì¼ëŒ€
 		player.Peascore_Add(pae);
 		player.peacount++;
-		if (pae == 32 || pae == 41 || pae == 47 || pae == 48 || pae == 49)		//½ÖÇÇ ÀÏ¶§
+		if (pae == 32 || pae == 41 || pae == 47 || pae == 48 || pae == 49)		//ìŒí”¼ ì¼ë•Œ
 			player.ssangpea++;
 	}
 }
 
-void GameFunction::OpScoreAdd(int pae)						//»ó´ë¹æ Á¡¼öÆĞ Ãß°¡
+void GameFunction::OpScoreAdd(int pae)						//ìƒëŒ€ë°© ì ìˆ˜íŒ¨ ì¶”ê°€
 {
 	if (pae == 0 || pae == 8 || pae == 28 || pae == 40 || pae == 44)
 	{
@@ -366,7 +365,7 @@ void GameFunction::OpScoreAdd(int pae)						//»ó´ë¹æ Á¡¼öÆĞ Ãß°¡
 	}
 }
 
-void GameFunction::OpenPaeUpdate()					//¹Ù´ÚÆĞ°¡ »õ·Ó°Ô ¾÷µ¥ÀÌÆ® µÉ¶§ ÃÖ½ÅÈ­ ÇÔ¼ö	
+void GameFunction::OpenPaeUpdate()					//ë°”ë‹¥íŒ¨ê°€ ìƒˆë¡­ê²Œ ì—…ë°ì´íŠ¸ ë ë•Œ ìµœì‹ í™” í•¨ìˆ˜	
 {
 	for (int i = 0; i < 11; i++)
 	{
@@ -375,14 +374,14 @@ void GameFunction::OpenPaeUpdate()					//¹Ù´ÚÆĞ°¡ »õ·Ó°Ô ¾÷µ¥ÀÌÆ® µÉ¶§ ÃÖ½ÅÈ­ ÇÔ
 	}
 	for (int i = 0; i < player.OpenPae_len(); i++)
 	{
-		openhbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[player.OpenFind_value(i)]));		//ÇÈÃÄÄÁÆ®·Ñ¸¦ ÀÌ¿ëÇØ ºñÆ®¸Ê ÀÌ¹ÌÁö Ãâ·Â(¹Ù´Ú¿¡ ³õÀÎÆĞ)
+		openhbit = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(BITmap[player.OpenFind_value(i)]));		//í”½ì³ì»¨íŠ¸ë¡¤ë¥¼ ì´ìš©í•´ ë¹„íŠ¸ë§µ ì´ë¯¸ì§€ ì¶œë ¥(ë°”ë‹¥ì— ë†“ì¸íŒ¨)
 		CStatic *openpic = (CStatic *)pMainDlg->GetDlgItem(Openpicture[i]);
 		openpic->SetBitmap(openhbit);
 	}
 	pMainDlg->Invalidate();
 }
 
-int GameFunction::myscore()					//³»Á¡¼ö °è»ê
+int GameFunction::myscore()					//ë‚´ì ìˆ˜ ê³„ì‚°
 {
 	player.mygwang = 0;
 	if (player.gwangcount == 3)
@@ -425,7 +424,7 @@ int GameFunction::myscore()					//³»Á¡¼ö °è»ê
 	return (player.mygwang+player.mymung+player.mydan+player.mypea);
 }
 
-int GameFunction::opscore()						//»ó´ë Á¡¼ö °è»ê
+int GameFunction::opscore()						//ìƒëŒ€ ì ìˆ˜ ê³„ì‚°
 {
 	player.opgwang = 0;
 	if (player.opgwangcount == 3)
